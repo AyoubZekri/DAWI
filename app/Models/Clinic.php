@@ -39,7 +39,7 @@ class Clinic extends Model
 
     public function specialty()
     {
-        return $this->belongsTo(Specialty::class);
+        return $this->belongsTo(specialties::class);
     }
 
     public function users()
