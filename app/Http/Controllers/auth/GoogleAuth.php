@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -50,7 +52,7 @@ class GoogleAuth extends Controller
                     'user_id' => $user->id,
                     'role_id' => $roleId,
                 ]);
-
+                Mail::to($user['email'])->send(new WelcomeMail($user));
                 $token = $user->createToken('auth_token')->plainTextToken;
 
                 return response()->json([

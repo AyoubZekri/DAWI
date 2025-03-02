@@ -34,7 +34,7 @@ class Clinic extends Model
 
     public function schedules()
     {
-        return $this->hasMany(Schedule_time::class);
+        return $this->hasMany(clinic_schedules::class, "clinic_id");
     }
 
     public function specialty()

@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 
 class ClinicController extends Controller
 {
-
-
     public function nearbyClinics(Request $request)
     {
         try {
@@ -33,6 +31,7 @@ class ClinicController extends Controller
               ", [$latitude, $longitude, $latitude])
                 ->having('distance', '<=', 2)
                 ->orderBy('distance', 'asc')
+                ->with('schedules')
                 ->get()
                 ->map(function ($clinic) {
                     $clinic->cover_image = $clinic->cover_image ? asset('storage/' . $clinic->cover_image) : null;
@@ -58,7 +57,7 @@ class ClinicController extends Controller
     public function allClinics()
     {
         try {
-            $clinics = Clinic::all()->map(function ($clinic) {
+            $clinics = Clinic::with('schedules')->get()->map(function ($clinic) {
                 $clinic->cover_image = $clinic->cover_image ? asset('storage/' . $clinic->cover_image) : null;
                 $clinic->profile_image = $clinic->profile_image ? asset('storage/' . $clinic->profile_image) : null;
                 return $clinic;
