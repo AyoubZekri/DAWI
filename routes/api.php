@@ -12,3 +12,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('auth/google', [GoogleAuth::class, 'GoogleLogin']);
 Route::get('Clinics/nearby', [ClinicController::class, 'nearbyClinics']);
 Route::get("Clinics/all",[ClinicController::class, "allClinics"]);
+Route::get('/clinics/search', [ClinicController::class, 'searchClinics']);

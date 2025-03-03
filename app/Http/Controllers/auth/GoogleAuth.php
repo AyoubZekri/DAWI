@@ -17,11 +17,14 @@ use Illuminate\Support\Facades\DB;
 
 class GoogleAuth extends Controller
 {
-    public function GoogleLogin()
+    public function GoogleLogin(Request $request)
     {
         try {
+            $googleToken = $request->input('token');
+
+            $googleUser = Socialite::driver('google')->userFromToken($googleToken);
+
             $roleId = 2;
-            $googleUser = Socialite::driver('google')->stateless()->user();
             $user = User::where('email', $googleUser->email)->first();
             if ($user) {
 

@@ -81,4 +81,52 @@ class ClinicController extends Controller
             ], 500);
         }
     }
+
+
+
+    public function searchClinics(Request $request)
+    {
+        $query = Clinic::with(['schedules', 'specialty']); // جلب العيادات مع التخصص والجدول الزمني
+
+        if ($request->has('name')) {
+            $query->where('name', 'LIKE', '%' . $request->name . '%');
+        }
+
+        if ($request->has('pharm_name_fr')) {
+            $query->where('pharm_name_fr', 'LIKE', '%' . $request->pharm_name_fr . '%');
+        }
+
+        if ($request->has('specialty')) {
+            $query->whereHas('specialty', function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->specialty . '%');
+            });
+        }
+
+        $clinics = $query->get()->map(function ($clinic) {
+            return [
+                'id' => $clinic->id,
+                'name' => $clinic->name,
+                'address' => $clinic->address,
+                'phone' => $clinic->phone,
+                'email' => $clinic->email,
+                'pharm_name_fr' => $clinic->pharm_name_fr,
+                'type' => $clinic->type,
+                'latitude' => $clinic->latitude,
+                'longitude' => $clinic->longitude,
+                'cover_image' => $clinic->cover_image ? asset('storage/' . $clinic->cover_image) : null,
+                'profile_image' => $clinic->profile_image ? asset('storage/' . $clinic->profile_image) : null,
+                'specialty' => $clinic->specialty->name ?? null,
+                'schedules' => $clinic->schedules->map(function ($schedule) {
+                    return [
+                        'day' => $schedule->day,
+                        'start_time' => $schedule->start_time,
+                        'end_time' => $schedule->end_time,
+                    ];
+                }),
+            ];
+        });
+
+        return response()->json($clinics);
+    }
+
 }
