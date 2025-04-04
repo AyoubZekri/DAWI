@@ -14,15 +14,15 @@ class Clinic extends Model
         'name',
         "email",
         "user_id",
-        'specialty_id',
+        "municipalities_id",
         "pharm_name_fr",
         'address',
         'latitude',
         'longitude',
         'phone',
         'type',
-        'active_from',
-        'active_to',
+        'register',
+        'Statue',
         'cover_image',
         'profile_image',
     ];
@@ -37,9 +37,9 @@ class Clinic extends Model
         return $this->hasMany(clinic_schedules::class, "clinic_id");
     }
 
-    public function specialty()
+    public function municipality()
     {
-        return $this->belongsTo(specialties::class);
+        return $this->belongsTo(Municipality::class, 'municipalitie_id');
     }
 
     public function users()

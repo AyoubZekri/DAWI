@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('specialties', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
-            $table->string('name_fr')->unique();
-            $table->string('specialy_img')->nullable();
-            $table->timestamps();
+        Schema::table('clinics', function (Blueprint $table) {
+            $table->tinyInteger('Statue')->default(0);
         });
     }
 
@@ -25,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('specialties');
+        Schema::table('clinics', function (Blueprint $table) {
+            $table->dropColumn('Statue');
+
+        });
     }
 };

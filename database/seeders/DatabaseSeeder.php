@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             ['id'=> 1,'role_name' => 'admin', 'created_at' => now()],
             ['id' => 2,'role_name' => 'User', 'created_at' => now()],
             ['id' => 3, 'role_name' => 'Clinic', 'created_at' => now()],
+            ['id' => 4, 'role_name' => 'Doctor', 'created_at' => now()],
 
         ]);
     }

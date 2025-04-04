@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class specialties extends Model
+class Municipality extends Model
 {
     use HasFactory;
+
+    protected $table = 'municipalities';
 
     protected $fillable = [
         'name',
         'name_fr',
-        'specialy_img',
     ];
 
-    /**
-     * Get the doctors that have this specialty.
-     */
-    public function doctors()
+
+    public function clinics()
     {
-        return $this->hasMany(Doctor::class, 'specialties_id');
+        return $this->hasMany(Clinic::class, 'municipalitie_id');
     }
 }
+

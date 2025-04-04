@@ -12,7 +12,9 @@ return new class extends Migration {
     {
         Schema::create('clinics', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('specialty_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('municipalities_id');
+            $table->foreign('municipalities_id')->references('id')->on('municipalities')->onDelete('cascade');
+
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('pharm_name_fr')->nullable();
@@ -22,8 +24,7 @@ return new class extends Migration {
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
             $table->string('phone')->nullable();
-            $table->time('active_from')->nullable();
-            $table->time('active_to')->nullable();
+            $table->string("register");
             $table->timestamps();
         });
     }
