@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\clinic\auth;
+namespace App\Http\Controllers\Clinic\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\confermemail;

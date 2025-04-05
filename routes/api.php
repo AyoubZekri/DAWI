@@ -2,15 +2,15 @@
 
 use App\Http\Controllers\admin\ClinicConfermController;
 use App\Http\Controllers\admin\MunicipalityController;
-use App\Http\Controllers\clinic\auth\login;
-use App\Http\Controllers\clinic\auth\register;
+use App\Http\Controllers\Clinic\Auth\Login;
+use App\Http\Controllers\Clinic\Auth\Register;
 use App\Http\Controllers\showSpecialtyController;
 use App\Http\Controllers\admin\SpecialtyController;
 use App\Http\Controllers\user_nurmal\ClinicController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleAuth;
-use App\Http\Controllers\clinic\DoctorController;
+use App\Http\Controllers\Clinic\DoctorController;
 
 
 
@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('Clinics/logout', [login::class, 'logout']);
 });
 Route::post('auth/google', [GoogleAuth::class, 'GoogleLogin']);
-Route::get('Clinics/nearby', [ClinicController::class, 'nearbyClinics']);
+Route::git('Clinics/nearby', [ClinicController::class, 'nearbyClinics']);
 Route::get("Clinics/all", [ClinicController::class, "allClinics"]);
 Route::get('/clinics/search', [ClinicController::class, 'searchClinics']);
 Route::get('clinics/{id}', [ClinicController::class, 'showClinic']);
@@ -33,8 +33,8 @@ Route::get('/Clinics/search/conferm', [ClinicConfermController::class, 'searchCl
 Route::post('/clinics/{id}/approve', [ClinicConfermController::class, 'approveClinic']);
 
 
-Route::post('Clinics/login', [login::class, 'login']);
-Route::post('Clinics/register', [register::class, 'register']);
+Route::post('Clinics/login', [Login::class, 'login']);
+Route::post('Clinics/register', [Register::class, 'register']);
 Route::put('Clinics/update/{id}', [register::class, 'update']);
 Route::delete('Clinics/delete/{id}', [register::class, 'destroy']);
 

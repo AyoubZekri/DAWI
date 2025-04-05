@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\clinic\auth;
+namespace App\Http\Controllers\Clinic\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -9,7 +9,7 @@ use App\Models\Clinic;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class login extends Controller
+class Login extends Controller
 {
     public function login(Request $request)
     {
