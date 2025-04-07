@@ -61,7 +61,7 @@ class ClinicConfermController extends Controller
     {
         try {
             $query = Clinic::with(['schedules', 'municipality'])
-                ->where('Statue', 1);
+                ->where('Statue', 0);
 
             if ($request->has('name')) {
                 $query->where('name', 'LIKE', '%' . $request->name . '%');

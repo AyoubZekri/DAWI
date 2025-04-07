@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\admin\Auth\LoginController;
+use App\Http\Controllers\admin\Auth\LogoutController;
+use App\Http\Controllers\admin\Auth\RegisterController;
 use App\Http\Controllers\admin\ClinicConfermController;
 use App\Http\Controllers\admin\MunicipalityController;
 use App\Http\Controllers\Clinic\Auth\Login;
@@ -16,14 +19,20 @@ use App\Http\Controllers\Clinic\DoctorController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return response()->json($request->user());
-
 });
+
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('Clinics/logout', [login::class, 'logout']);
+    Route::post('/admin/logout', [LogoutController::class, 'logout']);
+});
+Route::post('/admin/login', [LoginController::class, 'login']);
+Route::post('/admin/create', [RegisterController::class, 'Registeradmin']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('Clinics/logout', [Login::class, 'logout']);
 });
 Route::post('auth/google', [GoogleAuth::class, 'GoogleLogin']);
-Route::git('Clinics/nearby', [ClinicController::class, 'nearbyClinics']);
+Route::get('Clinics/nearby', [ClinicController::class, 'nearbyClinics']);
 Route::get("Clinics/all", [ClinicController::class, "allClinics"]);
 Route::get('/clinics/search', [ClinicController::class, 'searchClinics']);
 Route::get('clinics/{id}', [ClinicController::class, 'showClinic']);
@@ -52,9 +61,14 @@ Route::delete('Municipality/delete/{id}', [MunicipalityController::class, 'destr
 
 
 
+
 Route::get('show/doctor/{id}', [DoctorController::class, 'index']);
 Route::post('add/doctor', [DoctorController::class, 'store']);
 Route::put('updata/doctor/{id}', [DoctorController::class, 'update']);
 Route::delete('delete/doctor/{id}', [DoctorController::class, 'destroy']);
 Route::get('doctor/{id}', [DoctorController::class, 'showdoctor']);
 
+
+
+
+Route::get('/clinics/by-specialty/{id}', [ClinicController::class, 'getBySpecialty']);

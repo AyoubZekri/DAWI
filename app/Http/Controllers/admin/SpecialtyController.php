@@ -55,7 +55,7 @@ class SpecialtyController extends Controller
     }
 
 
-     public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $specialty = specialties::find($id);
 
@@ -84,8 +84,15 @@ class SpecialtyController extends Controller
                 $specialty->specialy_img = $request->file('specialy_img')->store('specialties_images', 'public');
             }
 
-            $specialty->update($request->only(['name', 'name_fr']));
+            if ($request->filled('name')) {
+                $specialty->name = $request->input('name');
+            }
 
+            if ($request->filled('name_fr')) {
+                $specialty->name_fr = $request->input('name_fr');
+            }
+
+            $specialty->save();
             return response()->json([
                 'status' => 'success',
                 'message' => 'تم تحديث التخصص بنجاح',

@@ -37,6 +37,13 @@ class Clinic extends Model
         return $this->hasMany(clinic_schedules::class, "clinic_id");
     }
 
+
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class, 'clinic_id');
+    }
+
+
     public function municipality()
     {
         return $this->belongsTo(Municipality::class, 'municipalitie_id');

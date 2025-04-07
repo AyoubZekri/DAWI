@@ -115,7 +115,36 @@ class ClinicController extends Controller
 
 
 
-    public function searchClinicsNotConferm(Request $request)
+    public function getBySpecialty($id)
+    {
+        try {
+            $clinics = Clinic::whereHas('doctors', function ($query) use ($id) {
+                $query->where('specialties_id', $id);
+            })
+                ->with([
+                    'doctors' => function ($query) use ($id) {
+                        $query->where('specialties_id', $id);
+                    }
+                ])
+                ->get();
+
+            return response()->json([
+                'status' => 'success',
+                'clinics' => $clinics
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'حدث خطأ أثناء جلب البيانات',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+
+    }
+
+
+
+    public function searchClinics(Request $request)
     {
         try {
             $query = Clinic::with(['schedules', 'municipality'])->where('Statue', 1);
